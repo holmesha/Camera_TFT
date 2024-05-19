@@ -21,5 +21,5 @@ This project demonstrates how to display a camera feed on an ST7789 TFT display 
 ## Software Setup
 ### Dependencies
 Ensure all required libraries are installed. Mainly I used the Adafruit libraries to make it easy to use the Eyespi beret/screen.
-
+```bash
 sudo pip3 install adafruit-circuitpython-rgb-display pillow picamera2 spidev adafruit-blinka
