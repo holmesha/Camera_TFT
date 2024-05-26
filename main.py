@@ -62,23 +62,27 @@ picam2.start()
 # Initialize Tkinter
 root = tk.Tk()
 root.title("Camera Feed")
+root.geometry("800x600")  # Set the size of the Tkinter window
 
 # Create a label to display the camera feed
 label = tk.Label(root)
-label.pack()
+label.pack(expand=True)
 
 # Function to update the Tkinter window with the camera feed
 def update_frame():
     frame = picam2.capture_array()
     image = Image.fromarray(frame).convert('RGB')
-    image = image.resize((display.width, display.height), Image.BILINEAR)
+    image_tft = image.resize((display.width, display.height), Image.BILINEAR)
     
     # Display the image on the physical display
     if backlight.value:
-        display.image(image)
+        display.image(image_tft)
 
-    # Convert the image to a format Tkinter can use and display it in the Tkinter w>
-    tk_image = ImageTk.PhotoImage(image)
+    # Resize the image for the larger Tkinter window
+    image_tk = image.resize((800, 600), Image.BILINEAR)
+
+    # Convert the image to a format Tkinter can use and display it in the Tkinter window
+    tk_image = ImageTk.PhotoImage(image_tk)
     label.config(image=tk_image)
     label.image = tk_image
     
@@ -106,5 +110,3 @@ root.mainloop()
 # Stop the camera and turn off the backlight when the program is closed
 picam2.stop()
 backlight.value = False  # Turn off backlight when done
-
-     
